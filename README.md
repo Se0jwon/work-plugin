@@ -19,13 +19,13 @@
 
 ## 전제조건
 
-1. **Claude in Chrome** — `claude --chrome` 으로 Claude Code 를 연다.
-2. **PlayMCP 도구함에 `카카오톡 나챗방`** 을 담는다 → https://playmcp.kakao.com/mcp/1
-3. **claude.ai 커넥터에 PlayMCP 연결** → https://claude.ai/customize/connectors
+1. **PlayMCP 도구함에 `사람인`과 `카카오톡 나챗방`** 을 담는다 → https://playmcp.kakao.com/mcp/1
+2. **claude.ai 커넥터에 PlayMCP 연결** → https://claude.ai/customize/connectors
    같은 Claude 계정이면 Claude Code 의 `/mcp` 에 `claude.ai PlayMCP` 로 뜬다.
    그래서 이 플러그인은 `.mcp.json` 을 두지 않는다.
-4. (선택) PlayMCP 도구함에 사람인 전용 MCP 도구가 있으면 Skill 이 그 도구를 우선 쓴다.
-   없으면 Claude in Chrome 으로 사람인 홈페이지를 직접 읽는다.
+
+사람인 검색과 카톡 전송 모두 PlayMCP MCP 커넥터를 통해서만 이루어진다(Claude in Chrome 불필요).
+그래서 claude.ai 클라우드 루틴에서도 그대로 동작한다.
 
 ## 매일 09:30 자동 실행
 
@@ -34,7 +34,8 @@
 
 1. claude.ai 에서 새 루틴을 만들고 주기를 매일 09:30 으로 지정한다.
 2. 루틴 프롬프트에 `채용 공고 브리핑` (또는 "오늘 채용 공고 알려줘") 을 넣는다.
-3. 루틴이 실행되는 환경에 이 플러그인과 Claude in Chrome / PlayMCP 연결이 되어 있어야 한다.
+3. 루틴에 PlayMCP 커넥터를 연결하고, `mcp__PlayMCP__SaraminMcp-search_saramin_jobs` 와
+   `mcp__PlayMCP__KakaotalkChat-MemoChat` 을 허용 도구에 넣는다. (Claude in Chrome 필요 없음.)
 
 ## 구성
 

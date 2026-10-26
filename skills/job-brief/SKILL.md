@@ -2,8 +2,8 @@
 name: job-brief
 description: >-
   「채용 공고 브리핑」「오늘 채용 공고 알려줘」「일자리 브리핑」처럼 오늘의 채용 공고를
-  원할 때 쓴다. Claude in Chrome 으로 사람인(saramin.co.kr)을 열어
-  백엔드·프론트엔드·AI 세 직군의 채용 공고를 읽고, 터미널에 보여 준 뒤
+  원할 때 쓴다. 사람인 MCP(`SaraminMcp-search_saramin_jobs`)로
+  백엔드·프론트엔드·AI 세 직군의 채용 공고를 찾아, 터미널에 보여 준 뒤
   카카오톡 나챗방으로 보낸다.
 ---
 
@@ -11,30 +11,31 @@ description: >-
 
 ## 0. 준비 확인
 
-- **Claude in Chrome** 이 붙어 있어야 한다 (`claude --chrome` 으로 연다).
-  안 붙어 있으면 그렇게 다시 열라고 알려 주고 멈춘다.
+- **사람인 MCP** — PlayMCP 도구함에 담긴 `SaraminMcp-search_saramin_jobs` 도구를 쓴다.
+  안 보이면(`mcp__claude_ai_PlayMCP__SaraminMcp-search_saramin_jobs` 가 없으면) 멈추고,
+  https://playmcp.kakao.com/mcp/1 에서 "사람인" 도구를 도구함에 추가하라고 알려 준다.
 - **카카오톡 나챗방** 은 claude.ai 에 연결한 PlayMCP 커넥터의 `KakaotalkChat-MemoChat` 도구를 쓴다.
   이 플러그인은 `.mcp.json` 을 두지 않는다.
-- 사람인 전용 MCP 도구가 PlayMCP 도구함에 연결돼 있으면(예: `mcp__claude_ai_PlayMCP__Saramin...`)
-  1번 데이터 수집을 그 도구로 대신한다. 없으면 Claude in Chrome 으로 사람인 홈페이지를 직접 읽는다.
 
 ## 1. 데이터 — 사람인(saramin.co.kr), 세 직군
 
-아래 세 카테고리를 **순서대로** 검색한다. 카테고리마다 Claude in Chrome 으로
-`https://www.saramin.co.kr/zf_user/search/recruit?searchword=<키워드>` 를 열어
-검색 결과 상위에 보이는 공고 **2~3개**의 회사명·공고 제목·지역(또는 경력 조건)을 읽는다.
+아래 세 카테고리를 **순서대로** `search_saramin_jobs` 로 검색한다
+(`searchWord` 만 채우고, 배열 파라미터는 빈 배열 `[]`, 숫자 파라미터는 `0`, `recIds` 는 `""`,
+`page`: `1`, `pageCount`: `2`, `sort`: `"Relation"`).
 
-| 카테고리 | 검색 키워드 |
+| 카테고리 | searchWord |
 |---|---|
 | 백엔드 개발자 | `백엔드 개발자` |
 | 프론트엔드 개발자 | `프론트엔드 개발자` |
 | AI/머신러닝 개발자 | `AI 엔지니어` (결과가 적으면 `머신러닝 엔지니어`, `컴퓨터비전`, `데이터 엔지니어`, `MLOps` 로 추가 검색) |
 
+응답 위젯의 각 카드에서 공고 제목(`Text` 중 `weight: bold`인 값), 회사명, 지역(지역 Row의 두 번째
+`Text`)을 그대로 뽑는다. 카테고리당 **상위 2개**만 쓴다.
+
 규칙:
 
-- 공고 제목·회사명·지역은 **화면에서 읽은 것만** 쓴다. 기억이나 추정으로 채우지 않는다.
-- 못 읽은 값은 `확인 못 함` 으로 적는다.
-- 광고(상단 고정) 공고만 있고 일반 공고가 안 보이면 그 사실을 적고 다음 카테고리로 넘어간다.
+- 공고 제목·회사명·지역은 **도구가 반환한 것만** 쓴다. 기억이나 추정으로 채우지 않는다.
+- 도구 호출이 에러를 내거나 결과가 0건이면 해당 카테고리는 `확인 못 함` 으로 적는다.
 
 ## 2. 터미널에 보여 주기
 
