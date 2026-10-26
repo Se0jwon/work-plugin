@@ -1,0 +1,26 @@
+{
+  "name": "work-plugin",
+  "description": "「채용 공고 브리핑」이라고 하면 사람인(saramin.co.kr)에서 백엔드·프론트엔드·AI 직군 채용 공고를 찾아 터미널에 보여 주고, 카카오톡 나챗방으로도 보냅니다.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Se0jwon",
+    "url": "https://github.com/Se0jwon"
+  },
+  "license": "MIT",
+  "keywords": ["job", "saramin", "career", "kakao", "playmcp"],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__.*__KakaotalkChat-MemoChat",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/check-job-message.js\"",
+            "timeout": 5,
+            "statusMessage": "채용 브리핑 메시지 검사 중..."
+          }
+        ]
+      }
+    ]
+  }
+}

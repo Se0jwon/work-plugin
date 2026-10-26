@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "work-plugin",
+  "description": "사람인 채용 공고 브리핑 → 터미널 · 카카오톡 나챗방 플러그인",
+  "owner": {
+    "name": "Se0jwon",
+    "url": "https://github.com/Se0jwon"
+  },
+  "plugins": [
+    {
+      "name": "work-plugin",
+      "description": "사람인(saramin.co.kr)에서 백엔드·프론트엔드·AI 직군 채용 공고를 읽어 요약하고 카카오톡 나챗방으로 보냅니다.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
